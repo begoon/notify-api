@@ -4,6 +4,9 @@ import { cors } from "hono/cors";
 const app = new Hono();
 
 const BOT_TOKEN = Deno.env.get("BOT_TOKEN");
+const [teapot, me] = Deno.env.get("ME")?.split(":") || ["", ""];
+
+if (!BOT_TOKEN) throw new Error("BOT_TOKEN is not set");
 
 function people() {
   const pairs = Deno.env.get("PEOPLE")?.split(",");
@@ -17,8 +20,7 @@ app.use("/*", cors());
 app.get("/", (c) => c.text("ha?", 418));
 
 app.get("/notify/:who/:message", async (c) => {
-  const teapot = c.req.header("teapot");
-  if (teapot != "me") return c.text("tea?", 418);
+  if (c.req.header(teapot) != me) return c.text("tea?", 418);
 
   const who = c.req.param("who");
   const text = c.req.param("message");
@@ -28,8 +30,7 @@ app.get("/notify/:who/:message", async (c) => {
 });
 
 app.post("/notify/:who", async (c) => {
-  const teapot = c.req.header("teapot");
-  if (teapot != "me") return c.text("tea?", 418);
+  if (c.req.header(teapot) != me) return c.text("tea?", 418);
 
   const who = c.req.param("who");
   const body = await c.req.json();

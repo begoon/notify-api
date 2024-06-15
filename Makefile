@@ -4,12 +4,12 @@ export
 all:
 
 send-get:
-	http GET http://$(HOST)/notify/wheel/good $(KEY)
+	http GET http://$(HOST)/notify/wheel/good $(ME)
 
 send-post:
 	test -n "$(TEXT)" || (echo "TEXT is not set" && exit 1)
 	http POST http://$(HOST)/notify/wheel \
-	$(KEY) \
+	$(ME) \
 	text="$(TEXT)" \
 	format="$(FORMAT)"
 
