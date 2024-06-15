@@ -25,7 +25,7 @@ app.get("/notify/:who/:message", async (c) => {
   const who = c.req.param("who");
   const text = c.req.param("message");
 
-  const result = await send(who, text, "text");
+  const result = await send(who, text);
   return c.json(result, !result.ok ? 418 : 200);
 });
 
@@ -40,7 +40,7 @@ app.post("/notify/:who", async (c) => {
   return c.json(result, !result.ok ? 418 : 200);
 });
 
-async function send(who: string, message: string, format: string) {
+async function send(who: string, message: string, format: string = "") {
   const recepient = people()[who];
   if (!recepient) return;
   console.log({ send: { who, recepient, message, format } });
