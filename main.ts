@@ -42,7 +42,7 @@ app.post("/notify/:who", async (c) => {
 
 async function send(who: string, message: string, format: string = "") {
   const recepient = people()[who];
-  if (!recepient) return;
+  if (!recepient) return { ok: false, error: "recepient not found" };
   console.log({ send: { who, recepient, message, format } });
   const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
   const body = { chat_id: recepient, text: message, parse_mode: format };

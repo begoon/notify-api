@@ -1,0 +1,33 @@
+###
+
+POST {{$dotenv HOST}}/notify/{{$dotenv RECEIVER}}
+{{$dotenv ME}}
+
+{
+  "text": "ready?"
+}
+
+###
+
+POST {{$dotenv HOST}}/notify/{{$dotenv RECEIVER}}
+{{$dotenv ME}}
+
+{
+  "text": "<u>ready</u>?\n\n<code>{\n\t\tconst a = 10;\n}</code>",
+  "format": "HTML"
+}
+
+###
+
+POST {{$dotenv HOST}}/notify/{{$dotenv RECEIVER}}
+{{$dotenv ME}}
+
+{
+  "text": "**ready**?\n\n```{\n\t\tconst a = 10;\n}```",
+  "format": "MarkdownV2"
+}
+
+###
+
+GET {{$dotenv HOST}}/notify/{{$dotenv RECEIVER}}/message
+{{$dotenv ME}}
